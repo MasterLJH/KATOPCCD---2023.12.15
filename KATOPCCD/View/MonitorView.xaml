@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="KATOPCCD.View.MonitorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KATOPCCD.View"
+             mc:Ignorable="d" 
+             xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
+             d:DesignHeight="520" d:DesignWidth="800">
+    <!--目前主页分左右两大块，左边放一些表格数据，如果上到视觉，可以放halcon的控件显示图片|右边做log，登录，以及报警-->
+    <Grid >
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--第二板块-->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+
+            <!--报警-->
+            <GroupBox Header="Alarm" >
+                <ScrollViewer x:Name="ScrollWarning">
+                    <TextBox x:Name="TextBoxWarning" IsReadOnly="True" Foreground="Red" Text="{Binding Warning}" SizeChanged="TextBoxWarning_SizeChanged" FontSize="16" FontWeight="Bold"/>
+                </ScrollViewer>
+            </GroupBox>
+            <!--登录-->
+            <GroupBox Header="Login" Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0" Content="{Binding LoginState}" Width="100"   Command="{Binding MonitorViewModelCommand}" CommandParameter="Login"/>
+                    <Button Grid.Column="2" Content="加载作业" Width="100" Command="{Binding MonitorViewModelCommand}" CommandParameter="LoadJob" IsEnabled="{Binding HasLogin}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="  当前作业"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding CurJob.Name}"/>
+                </Grid>
+
+            </GroupBox>
+            <!--日志-->
+            <GroupBox Grid.Row="2" Header="日志">
+                <ScrollViewer x:Name="Scroll">
+                    <TextBox x:Name="TextBox" IsReadOnly="True" Text="{Binding LogLive}" SizeChanged="TextBox_SizeChanged" TextWrapping="Wrap" />
+                </ScrollViewer>
+            </GroupBox>
+
+        </Grid>
+
+
+
+
+    </Grid>
+</UserControl>

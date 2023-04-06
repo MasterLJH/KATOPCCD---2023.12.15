@@ -1,0 +1,31 @@
+﻿<Window x:Class="KATOPCCD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KATOPCCD.View"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
+        Title="KATOPCCD" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <controls:TabControl SelectedIndex="{Binding TabIndex,Mode=TwoWay}">
+                <controls:TabItem Header="主页面"  FontSize="20">
+                    <local:MonitorView x:Name="Monitor" DataContext="{Binding MonitorViewModel}"></local:MonitorView>
+                </controls:TabItem>
+
+                <controls:TabItem Header="作业配置" FontSize="20" IsEnabled="{Binding MonitorViewModel.HasLoginOtherWindow}">
+                    <local:JobView DataContext="{Binding JobViewModel}"></local:JobView>
+                </controls:TabItem>
+            </controls:TabControl>
+        </Grid>
+
+
+    </Grid>
+</Window>
